@@ -1,8 +1,8 @@
 {
   "name": "re-carousel",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "React carousel component, simplified.",
-  "main": "index.js",
+  "main": "Carousel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,7 @@
     "react": "^0.14.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.6.5",
     "eslint": "^2.3.0",
     "eslint-config-standard": "^5.1.0",
     "eslint-config-standard-react": "^2.3.0",

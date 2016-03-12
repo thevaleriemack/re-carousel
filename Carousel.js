@@ -1,4 +1,4 @@
-import React from 'react'
+const React = require('react')
 
 class Carousel extends React.Component {
   constructor (props, context) {
