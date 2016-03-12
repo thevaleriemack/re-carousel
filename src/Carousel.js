@@ -3,9 +3,7 @@ import React from 'react'
 class Carousel extends React.Component {
   constructor (props, context) {
     super(props, context)
-    const frames = this.props.frames || this.props.children.filter(child => {
-      return typeof child !== 'string'
-    })
+    const frames = this.props.frames || this.props.children
     this.state = {
       frames: frames,
       total: frames.length,
