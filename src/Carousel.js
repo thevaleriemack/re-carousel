@@ -194,6 +194,7 @@ class Carousel extends React.Component {
           return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
         })}
         {Indicator && <Indicator index={this.state.current} total={this.state.total} />}
+        {this.props.frames && this.props.children}
       </div>
     )
   }
