@@ -184,7 +184,7 @@ class Carousel extends React.Component {
 
   render () {
     const wrapperStyle = objectAssign(styles.wrapper, this.props.style)
-    const ThisIndicator = this.props.indicator
+    const Indicator = this.props.indicator
     return (
       <div ref='wrapper' style={wrapperStyle}
         onTouchStart={this.onTouchStart}
@@ -193,9 +193,7 @@ class Carousel extends React.Component {
           const frameStyle = objectAssign({zIndex: 99 - i}, styles.frame)
           return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
         })}
-        {}
-        {this.props.indicator &&
-          <ThisIndicator index={this.state.current} total={this.state.total} />}
+        {Indicator && <Indicator index={this.state.current} total={this.state.total} />}
       </div>
     )
   }
@@ -203,12 +201,12 @@ class Carousel extends React.Component {
 
 Carousel.propTypes = {
   axis: React.PropTypes.oneOf(['x', 'y']),
-  style: React.PropTypes.object,
-  frames: React.PropTypes.arrayOf(React.PropTypes.element),
   auto: React.PropTypes.bool,
   interval: React.PropTypes.number,
   duration: React.PropTypes.number,
-  indicator: React.PropTypes.func
+  indicator: React.PropTypes.func,
+  frames: React.PropTypes.arrayOf(React.PropTypes.element),
+  style: React.PropTypes.object
 }
 
 Carousel.defaultProps = {
