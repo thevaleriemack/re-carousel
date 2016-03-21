@@ -6,11 +6,12 @@
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "babel src -d dist",
-    "postbuild": "cp package.json LICENSE README.md dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "patch": "npm version patch -m 'v%s'",
     "minor": "npm version minor -m 'v%s'",
-    "major": "npm version major -m 'v%s'"
+    "major": "npm version major -m 'v%s'",
+    "prepub": "npm run build",
+    "pub": "cp dist/* ./ && npm publish && rm ./*.js"
   },
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
