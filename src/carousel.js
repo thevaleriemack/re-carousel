@@ -41,7 +41,7 @@ class Carousel extends React.Component {
         const direction = {x: 'left', y: 'up'}[this.props.axis]
         // prepare frames
         this.updateFrameSize()
-        this.moveFrames(0, 0)
+        this.moveFramesBy(0, 0)
         this.updateFrameSize()
         // make the move
         this.moveFramesTowards(direction)
@@ -51,12 +51,16 @@ class Carousel extends React.Component {
   }
 
   onTouchStart (e) {
+    if (this.state.total < 2) return
+
     this.updateFrameSize()
     clearTimeout(this.state.slider)
     const { pageX, pageY } = e.touches && e.touches[0] || e
     this.setState({
       startX: pageX,
-      startY: pageY
+      startY: pageY,
+      deltaX: 0,
+      deltaY: 0
     })
 
     this.refs.wrapper.addEventListener('touchmove', this.onTouchMove)
@@ -80,7 +84,7 @@ class Carousel extends React.Component {
     if (this.state.horizontal && Math.abs(deltaX) < Math.abs(deltaY)) return
 
     e.preventDefault()
-    this.moveFrames(deltaX, deltaY)
+    this.moveFramesBy(deltaX, deltaY)
   }
 
   onTouchEnd (e) {
@@ -95,7 +99,7 @@ class Carousel extends React.Component {
     this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd)
   }
 
-  moveFrames (deltaX, deltaY) {
+  moveFramesBy (deltaX, deltaY) {
     const { prev, current, next } = this.getSiblingFrames()
     toggleAnimation(prev, 0)
     toggleAnimation(current, 0)
@@ -143,18 +147,20 @@ class Carousel extends React.Component {
         translate(current, this.state.frameWidth, 0)
         translate(prev, 0, 0)
         newCurrentId = this.getFrameId('prev')
+        break
+      default:
+        return
     }
     // Update state
     this.setState({current: newCurrentId})
   }
 
   decideTargetPosition (deltaX, deltaY) {
+    if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) return 'origin'
     switch (this.props.axis) {
       case 'x':
-        if (Math.abs(deltaX / deltaY) < 1) return 'origin'
         return deltaX > 0 ? 'right' : 'left'
       case 'y':
-        if (Math.abs(deltaY / deltaX) < 1) return 'origin'
         return deltaY > 0 ? 'down' : 'up'
       default:
         console.error('Decide: on %s axis', this.props.axis, deltaX, deltaY)
