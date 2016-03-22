@@ -127,22 +127,22 @@ class Carousel extends React.Component {
       case 'up':
         translate(current, 0, -this.state.frameHeight)
         translate(next, 0, 0)
-        newCurrentId = this.getFrameId('prev')
+        newCurrentId = this.getFrameId('next')
         break
       case 'down':
         translate(current, 0, this.state.frameHeight)
         translate(prev, 0, 0)
-        newCurrentId = this.getFrameId('next')
+        newCurrentId = this.getFrameId('prev')
         break
       case 'left':
         translate(current, -this.state.frameWidth, 0)
         translate(next, 0, 0)
-        newCurrentId = this.getFrameId('prev')
+        newCurrentId = this.getFrameId('next')
         break
       case 'right':
         translate(current, this.state.frameWidth, 0)
         translate(prev, 0, 0)
-        newCurrentId = this.getFrameId('next')
+        newCurrentId = this.getFrameId('prev')
     }
     // Update state
     this.setState({current: newCurrentId})
@@ -165,20 +165,19 @@ class Carousel extends React.Component {
     const { total, current } = this.state
     switch (pos) {
       case 'prev':
-        return (current + 1) % total
+        return (current - 1 + total) % total
       case 'next':
-        return (current + total - 1) % total
+        return (current + 1) % total
       default:
         return current
     }
   }
 
   getSiblingFrames () {
-    const { total, current } = this.state
     return {
-      current: this.refs['f' + current],
-      prev: this.refs['f' + (current + 1) % total],
-      next: this.refs['f' + (current + total - 1) % total]
+      current: this.refs['f' + this.getFrameId()],
+      prev: this.refs['f' + this.getFrameId('prev')],
+      next: this.refs['f' + this.getFrameId('next')]
     }
   }
 
