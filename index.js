@@ -2,10 +2,8 @@
 
 var _reactDom = require('react-dom');
 
-window.requireCommonjs(['/carousel.js'], function (Carousel) {
-  //
+window.requireCommonjs(['carousel.js'], function (Carousel) {
   function App(props) {
-    console.log(Carousel);
     return React.createElement(
       'div',
       { style: { height: '100%' } },
