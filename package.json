@@ -8,6 +8,8 @@
     "build": "babel src -d dist",
     "test": "eslint src && echo \"Error: no test specified\" && exit 1",
     "ghp": "npm run build && cp -R dist gh-pages/dist",
+    "preexample": "rm -rf ./gh-pages && cp -R dist gh-pages",
+    "example": "cp example/*.html gh-pages && babel example -d gh-pages",
     "patch": "npm version patch -m 'v%s'",
     "minor": "npm version minor -m 'v%s'",
     "major": "npm version major -m 'v%s'",
