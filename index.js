@@ -10,8 +10,21 @@ window.requireCommonjs(['carousel.js'], function (Carousel) {
       React.createElement(
         Carousel,
         { auto: true },
-        React.createElement('div', { style: { backgroundColor: 'royalblue', height: '100%' } }),
-        React.createElement('div', { style: { backgroundColor: 'orange', height: '100%' } })
+        React.createElement(
+          'div',
+          { style: { backgroundColor: 'royalblue', height: '100%' } },
+          '11'
+        ),
+        React.createElement(
+          'div',
+          { style: { backgroundColor: 'orange', height: '100%' } },
+          '22'
+        ),
+        React.createElement(
+          'div',
+          { style: { backgroundColor: 'orchid', height: '100%' } },
+          '33'
+        )
       )
     );
   }
