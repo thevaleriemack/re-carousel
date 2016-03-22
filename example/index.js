@@ -5,9 +5,9 @@ window.requireCommonjs(['carousel.js'], function (Carousel) {
     return (
       <div style={{height: '100%'}}>
         <Carousel auto>
-          <div style={{backgroundColor: 'royalblue', height: '100%'}}>11</div>
-          <div style={{backgroundColor: 'orange', height: '100%'}}>22</div>
-          <div style={{backgroundColor: 'orchid', height: '100%'}}>33</div>
+          <p style={{backgroundColor: 'royalblue', height: '100%'}}>FRAME 1</p>
+          <p style={{backgroundColor: 'orange', height: '100%'}}>FRAME 2</p>
+          <p style={{backgroundColor: 'orchid', height: '100%'}}>FRAME 3</p>
         </Carousel>
       </div>
     )
