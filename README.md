@@ -10,7 +10,7 @@ demo: https://amio.github.io/re-carousel/
 
 ```html
 <Carousel auto>
-  <div style={{backgroundColor: 'indigo', height: '100%'}}>Frame 1</div>
+  <div style={{backgroundColor: 'tomato', height: '100%'}}>Frame 1</div>
   <div style={{backgroundColor: 'orange', height: '100%'}}>Frame 2</div>
   <div style={{backgroundColor: 'orchid', height: '100%'}}>Frame 3</div>
 </Carousel>
@@ -30,7 +30,7 @@ All attributes are optional.
   import IndicatorDots from 're-carousel/indicator-dots'
 
   <Carousel auto indicator={IndicatorDots}>
-    <div style={{backgroundColor: 'indigo', height: '100%'}}>Frame 1</div>
+    <div style={{backgroundColor: 'tomato', height: '100%'}}>Frame 1</div>
     <div style={{backgroundColor: 'orange', height: '100%'}}>Frame 2</div>
     <div style={{backgroundColor: 'orchid', height: '100%'}}>Frame 3</div>
   </Carousel>
