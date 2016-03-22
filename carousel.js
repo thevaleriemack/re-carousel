@@ -76,7 +76,7 @@ var Carousel = function (_React$Component) {
           var direction = { x: 'left', y: 'up' }[_this2.props.axis];
           // prepare frames
           _this2.updateFrameSize();
-          _this2.moveFrames(0, 0);
+          _this2.moveFramesBy(0, 0);
           _this2.updateFrameSize();
           // make the move
           _this2.moveFramesTowards(direction);
@@ -87,6 +87,8 @@ var Carousel = function (_React$Component) {
   }, {
     key: 'onTouchStart',
     value: function onTouchStart(e) {
+      if (this.state.total < 2) return;
+
       this.updateFrameSize();
       clearTimeout(this.state.slider);
 
@@ -97,7 +99,9 @@ var Carousel = function (_React$Component) {
 
       this.setState({
         startX: pageX,
-        startY: pageY
+        startY: pageY,
+        deltaX: 0,
+        deltaY: 0
       });
 
       this.refs.wrapper.addEventListener('touchmove', this.onTouchMove);
@@ -126,7 +130,7 @@ var Carousel = function (_React$Component) {
       if (this.state.horizontal && Math.abs(deltaX) < Math.abs(deltaY)) return;
 
       e.preventDefault();
-      this.moveFrames(deltaX, deltaY);
+      this.moveFramesBy(deltaX, deltaY);
     }
   }, {
     key: 'onTouchEnd',
@@ -135,7 +139,6 @@ var Carousel = function (_React$Component) {
       var deltaX = _state.deltaX;
       var deltaY = _state.deltaY;
 
-      console.log(this.decideTargetPosition(deltaX, deltaY));
       this.moveFramesTowards(this.decideTargetPosition(deltaX, deltaY));
 
       this.readyAutoSlide();
@@ -146,8 +149,8 @@ var Carousel = function (_React$Component) {
       this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd);
     }
   }, {
-    key: 'moveFrames',
-    value: function moveFrames(deltaX, deltaY) {
+    key: 'moveFramesBy',
+    value: function moveFramesBy(deltaX, deltaY) {
       var _getSiblingFrames = this.getSiblingFrames();
 
       var prev = _getSiblingFrames.prev;
@@ -206,6 +209,9 @@ var Carousel = function (_React$Component) {
           translate(current, this.state.frameWidth, 0);
           translate(prev, 0, 0);
           newCurrentId = this.getFrameId('prev');
+          break;
+        default:
+          return;
       }
       // Update state
       this.setState({ current: newCurrentId });
@@ -213,12 +219,11 @@ var Carousel = function (_React$Component) {
   }, {
     key: 'decideTargetPosition',
     value: function decideTargetPosition(deltaX, deltaY) {
+      if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) return 'origin';
       switch (this.props.axis) {
         case 'x':
-          if (Math.abs(deltaX / deltaY) < 1) return 'origin';
           return deltaX > 0 ? 'right' : 'left';
         case 'y':
-          if (Math.abs(deltaY / deltaX) < 1) return 'origin';
           return deltaY > 0 ? 'down' : 'up';
         default:
           console.error('Decide: on %s axis', this.props.axis, deltaX, deltaY);

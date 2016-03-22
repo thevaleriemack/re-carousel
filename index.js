@@ -2,28 +2,28 @@
 
 var _reactDom = require('react-dom');
 
-window.requireCommonjs(['carousel.js'], function (Carousel) {
+window.requireCommonjs(['carousel.js', 'indicator-dots.js'], function (Carousel, Dots) {
   function App(props) {
     return React.createElement(
       'div',
       { style: { height: '100%' } },
       React.createElement(
         Carousel,
-        { auto: true },
+        { auto: true, indicator: Dots },
         React.createElement(
-          'div',
+          'p',
           { style: { backgroundColor: 'royalblue', height: '100%' } },
-          '11'
+          'FRAME 1'
         ),
         React.createElement(
-          'div',
+          'p',
           { style: { backgroundColor: 'orange', height: '100%' } },
-          '22'
+          'FRAME 2'
         ),
         React.createElement(
-          'div',
+          'p',
           { style: { backgroundColor: 'orchid', height: '100%' } },
-          '33'
+          'FRAME 3'
         )
       )
     );
