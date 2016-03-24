@@ -6,7 +6,9 @@ demo: https://amio.github.io/re-carousel/
 
 ### Usage
 
-`import Carousel from 're-carousel'` then:
+`import Carousel from 're-carousel'`
+
+then:
 
 ```html
 <Carousel auto>
@@ -24,9 +26,10 @@ All attributes are optional.
 - `auto` {boolean} `true` or `false` (`false` by default) toggle auto sliding.
 - `interval` {number} (`4000`ms by default) interval for auto sliding.
 - `duration` {number} (`300`ms by default) duration for animation.
-- `indicator` {ReactClass} Indicator could be various, so it's not built within
-  the Carousel. You may use this [dots indicator](src/indicator-dots.js) or make
-  your own:
+- `indicator` {ReactClass} Indicator could be various, so it's not builtin.
+  You may create your own indicator according to this
+  [dots indicator](src/indicator-dots.js), or just send it in:
+
   ```javascript
   import Carousel from 're-carousel'
   import IndicatorDots from 're-carousel/indicator-dots'
@@ -41,7 +44,10 @@ All attributes are optional.
   ```
 - `frames` {Array of ReactElement} If you want to create frames programmatically,
   use this attribute:
+
   ```javascript
+  import Carousel from 're-carousel'
+
   export default function carousel (props) {
     const frames = props.frameArray.map((frame, i) => {
       return <div>Frame {i}</div>
