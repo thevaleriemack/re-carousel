@@ -1,4 +1,5 @@
-.DS_Store
+.*
 gh-pages
+example
 dist
 src
