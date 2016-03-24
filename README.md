@@ -27,7 +27,6 @@ All attributes are optional.
 - `indicator` {ReactClass} Indicator could be various, so it's not built within
   the Carousel. You may use this [dots indicator](src/indicator-dots.js) or make
   your own:
-
   ```javascript
   import Carousel from 're-carousel'
   import IndicatorDots from 're-carousel/indicator-dots'
@@ -37,6 +36,19 @@ All attributes are optional.
       <div style={{backgroundColor: 'tomato', height: '100%'}}>Frame 1</div>
       <div style={{backgroundColor: 'orange', height: '100%'}}>Frame 2</div>
       <div style={{backgroundColor: 'orchid', height: '100%'}}>Frame 3</div>
+    </Carousel>
+  }
+  ```
+- `frames` {Array of ReactElement} If you want to create frames programmatically,
+  use this attribute:
+  ```javascript
+  export default function carousel (props) {
+    const frames = props.frameArray.map((frame, i) => {
+      return <div>Frame {i}</div>
+    })
+    return <Carousel auto frames={frames}>
+      <span>These children element will be appended to Carousel,</span>
+      <span>as normal element other than "frame".</span>
     </Carousel>
   }
   ```
