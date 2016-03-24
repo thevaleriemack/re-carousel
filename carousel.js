@@ -30,6 +30,7 @@ var Carousel = function (_React$Component) {
     _this.state = {
       frames: frames,
       total: frames.length,
+      auto: _this.props.auto && frames.length > 1,
       current: 0, // current frame index
       vertical: _this.props.axis === 'y',
       horizontal: _this.props.axis === 'x'
@@ -70,7 +71,7 @@ var Carousel = function (_React$Component) {
     value: function readyAutoSlide() {
       var _this2 = this;
 
-      if (!this.props.auto) return;
+      if (!this.state.auto) return;
       this.setState({
         slider: setTimeout(function () {
           var direction = { x: 'left', y: 'up' }[_this2.props.axis];
