@@ -1,6 +1,6 @@
 {
   "name": "re-carousel",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "React carousel component, simplified.",
   "main": "carousel.js",
   "scripts": {
