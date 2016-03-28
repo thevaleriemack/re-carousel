@@ -1,6 +1,8 @@
 # re-carousel
 
-React carousel component, simplified. Only 7KB when minified, zero dependency.
+[![npm](https://img.shields.io/npm/v/re-carousel.svg)](https://www.npmjs.com/package/re-carousel)
+
+React carousel component, simplified. 7KB when minified, with zero dependency.
 
 demo: https://amio.github.io/re-carousel/
 
