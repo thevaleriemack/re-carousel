@@ -4,6 +4,7 @@
 
 React carousel component, simplified. 7KB when minified, with zero dependency.
 
+npm : https://www.npmjs.com/package/re-carousel
 demo: https://amio.github.io/re-carousel/
 
 ### Usage
