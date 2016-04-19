@@ -15,8 +15,8 @@
     "major": "npm version major -m 'v%s'",
     "preghp": "npm run example",
     "ghp": "gh-pages -d gh-pages -b gh-pages",
-    "prepub": "npm run build",
-    "pub": "cp dist/* ./ && npm publish && rm ./*.js"
+    "prepublish": "npm run build && cp dist/* ./",
+    "postpublish": "rm ./*.js"
   },
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
