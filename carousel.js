@@ -139,11 +139,22 @@ var Carousel = function (_React$Component) {
         deltaY: deltaY
       });
 
-      if (this.state.vertical && Math.abs(deltaY) < Math.abs(deltaX)) return;
-      if (this.state.horizontal && Math.abs(deltaX) < Math.abs(deltaY)) return;
+      if (!this.isMovingOnAxis(deltaX, deltaY)) return;
 
       e.preventDefault();
       this.moveFramesBy(deltaX, deltaY);
+    }
+  }, {
+    key: 'isMovingOnAxis',
+    value: function isMovingOnAxis(deltaX, deltaY) {
+      switch (this.props.axis) {
+        case 'x':
+          return Math.abs(deltaX) > Math.abs(deltaY);
+        case 'y':
+          return Math.abs(deltaX) < Math.abs(deltaY);
+        default:
+          return false;
+      }
     }
   }, {
     key: 'onTouchEnd',
@@ -151,6 +162,8 @@ var Carousel = function (_React$Component) {
       var _state = this.state;
       var deltaX = _state.deltaX;
       var deltaY = _state.deltaY;
+
+      if (!this.isMovingOnAxis(deltaX, deltaY)) return;
 
       this.moveFramesTowards(this.decideTargetPosition(deltaX, deltaY));
 
