@@ -26,15 +26,8 @@ var Carousel = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Carousel).call(this, props, context));
 
-    var frames = _this.props.frames || _this.props.children;
-    _this.state = {
-      frames: frames,
-      total: frames.length,
-      auto: _this.props.auto && frames.length > 1,
-      current: 0, // current frame index
-      vertical: _this.props.axis === 'y',
-      horizontal: _this.props.axis === 'x'
-    };
+    _this.state = _this.generateStateFromProps(props);
+    _this.state.current = 0; // current frame index
 
     _this.onTouchStart = _this.onTouchStart.bind(_this);
     _this.onTouchMove = _this.onTouchMove.bind(_this);
@@ -44,6 +37,18 @@ var Carousel = function (_React$Component) {
   }
 
   _createClass(Carousel, [{
+    key: 'generateStateFromProps',
+    value: function generateStateFromProps(props) {
+      var frames = props.frames || props.children;
+      return {
+        frames: frames,
+        total: frames.length,
+        auto: props.auto && frames.length > 1,
+        vertical: props.axis === 'y',
+        horizontal: props.axis === 'x'
+      };
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.readyAutoSlide();
@@ -52,6 +57,11 @@ var Carousel = function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       clearTimeout(this.state.slider);
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      this.setState(this.generateStateFromProps(props));
     }
   }, {
     key: 'updateFrameSize',
@@ -72,6 +82,8 @@ var Carousel = function (_React$Component) {
       var _this2 = this;
 
       if (!this.state.auto) return;
+      if (this.state.slider) clearTimeout(this.state.slider);
+
       this.setState({
         slider: setTimeout(function () {
           var direction = { x: 'left', y: 'up' }[_this2.props.axis];
