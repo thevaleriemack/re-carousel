@@ -8,9 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>re-carousel</title>
     <style>
-      html, body, #app { margin: 0; padding: 0; height: 100% }
+      html, body, #app { margin: 0; padding: 0; height: 100%; font-family: 'PT Sans', monospace }
       p { margin: 0; display: flex; justify-content: center; align-items: center }
-      p { font-family: 'PT Sans', monospace; color: white; font-variant: uppercase }
+      p { color: white; text-transform: uppercase }
+      .axis { margin: 0 1em; color: #FFF; opacity: 0.8; cursor: pointer; text-transform: uppercase }
+      .axis.current { opacity: 1; position: relative }
+      .axis.current:before { content: '•'; position: absolute; left: -11px }
       .github-corner { position: absolute; top: 0; right: 0; z-index: 100; opacity: 0.8 }
       .github-corner:hover { opacity: 1 }
       #app { z-index: 0 }
