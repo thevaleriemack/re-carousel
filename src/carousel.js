@@ -3,20 +3,24 @@ import React from 'react'
 class Carousel extends React.Component {
   constructor (props, context) {
     super(props, context)
-    const frames = this.props.frames || this.props.children
-    this.state = {
-      frames: frames,
-      total: frames.length,
-      auto: this.props.auto && frames.length > 1,
-      current: 0, // current frame index
-      vertical: this.props.axis === 'y',
-      horizontal: this.props.axis === 'x'
-    }
+    this.state = this.generateStateFromProps(props)
+    this.state.current = 0 // current frame index
 
     this.onTouchStart = this.onTouchStart.bind(this)
     this.onTouchMove = this.onTouchMove.bind(this)
     this.onTouchEnd = this.onTouchEnd.bind(this)
     this.readyAutoSlide = this.readyAutoSlide.bind(this)
+  }
+
+  generateStateFromProps (props) {
+    const frames = props.frames || props.children
+    return {
+      frames: frames,
+      total: frames.length,
+      auto: props.auto && frames.length > 1,
+      vertical: props.axis === 'y',
+      horizontal: props.axis === 'x'
+    }
   }
 
   componentDidMount () {
@@ -25,6 +29,10 @@ class Carousel extends React.Component {
 
   componentWillUnmount () {
     clearTimeout(this.state.slider)
+  }
+
+  componentWillReceiveProps (props) {
+    this.setState(this.generateStateFromProps(props))
   }
 
   updateFrameSize () {
@@ -37,6 +45,8 @@ class Carousel extends React.Component {
 
   readyAutoSlide () {
     if (!this.state.auto) return
+    if (this.state.slider) clearTimeout(this.state.slider)
+
     this.setState({
       slider: setTimeout(() => {
         const direction = {x: 'left', y: 'up'}[this.props.axis]
