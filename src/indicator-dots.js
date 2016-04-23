@@ -1,6 +1,8 @@
 import React from 'react'
 
 function IndicatorDots (props) {
+  if (props.total < 2) return <div style={styles.wrapper} />
+
   const dots = []
   for (let i = 0; i < props.total; i++) {
     const dotStyle = {
@@ -10,9 +12,9 @@ function IndicatorDots (props) {
       borderRadius: '4px',
       backgroundColor: 'white',
       margin: '7px 5px',
+      opacity: props.index === i ? '1' : '0.3',
       transitionDuration: '300ms'
     }
-    dotStyle.opacity = props.index === i ? '1' : '0.3'
     dots.push(<span key={i} style={dotStyle}></span>)
   }
   return <div style={styles.wrapper}>{dots}</div>
