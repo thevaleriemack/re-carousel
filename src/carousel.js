@@ -109,17 +109,17 @@ class Carousel extends React.Component {
   }
 
   onTouchEnd (e) {
-    const { deltaX, deltaY } = this.state
-    if (!this.isMovingOnAxis(deltaX, deltaY)) return
-
-    this.moveFramesTowards(this.decideTargetPosition(deltaX, deltaY))
-
-    this.readyAutoSlide()
-
     this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove)
     this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd)
     this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove)
     this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd)
+
+    const { deltaX, deltaY } = this.state
+    if (this.isMovingOnAxis(deltaX, deltaY)) {
+      this.moveFramesTowards(this.decideTargetPosition(deltaX, deltaY))
+    } else {
+      this.readyAutoSlide()
+    }
   }
 
   moveFramesBy (deltaX, deltaY) {
