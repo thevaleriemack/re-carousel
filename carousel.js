@@ -159,20 +159,20 @@ var Carousel = function (_React$Component) {
   }, {
     key: 'onTouchEnd',
     value: function onTouchEnd(e) {
-      var _state = this.state;
-      var deltaX = _state.deltaX;
-      var deltaY = _state.deltaY;
-
-      if (!this.isMovingOnAxis(deltaX, deltaY)) return;
-
-      this.moveFramesTowards(this.decideTargetPosition(deltaX, deltaY));
-
-      this.readyAutoSlide();
-
       this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove);
       this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd);
       this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove);
       this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd);
+
+      var _state = this.state;
+      var deltaX = _state.deltaX;
+      var deltaY = _state.deltaY;
+
+      if (this.isMovingOnAxis(deltaX, deltaY)) {
+        this.moveFramesTowards(this.decideTargetPosition(deltaX, deltaY));
+      } else {
+        this.readyAutoSlide();
+      }
     }
   }, {
     key: 'moveFramesBy',

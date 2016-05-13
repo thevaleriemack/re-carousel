@@ -9,8 +9,8 @@
     <title>re-carousel</title>
     <style>
       html, body, #app { margin: 0; padding: 0; height: 100%; font-family: 'PT Sans', monospace }
-      p { margin: 0; display: flex; justify-content: center; align-items: center }
-      p { color: white; text-transform: uppercase }
+      p { margin: 0; display: flex; justify-content: center; align-items: center; cursor: default }
+      p { color: white; text-transform: uppercase; -webkit-user-select: none; user-select: none }
       .axis { margin: 0 1em; color: #FFF; opacity: 0.8; cursor: pointer; text-transform: uppercase }
       .axis.current { opacity: 1; position: relative }
       .axis.current:before { content: '•'; position: absolute; left: -11px }
