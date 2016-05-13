@@ -11,7 +11,6 @@ test('<Carousel /> initial render', t => {
       <div style={{backgroundColor: 'orchid', height: '100%'}}>Frame 3</div>
     </Carousel>
   )
-  // console.log(wrapper.debug())
 
   t.same(wrapper.state().auto, true)
   t.same(wrapper.state().total, 3)
