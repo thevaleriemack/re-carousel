@@ -12,10 +12,10 @@ test('<Carousel /> initial render', t => {
     </Carousel>
   )
 
-  t.same(wrapper.state().auto, true)
-  t.same(wrapper.state().total, 3)
-  t.same(wrapper.state().current, 0)
-  t.same(wrapper.state().vertical, false)
-  t.same(wrapper.state().horizontal, true)
-  t.same(wrapper.children().nodes.length, 3)
+  t.deepEqual(wrapper.state().auto, true)
+  t.deepEqual(wrapper.state().total, 3)
+  t.deepEqual(wrapper.state().current, 0)
+  t.deepEqual(wrapper.state().vertical, false)
+  t.deepEqual(wrapper.state().horizontal, true)
+  t.deepEqual(wrapper.children().nodes.length, 3)
 })

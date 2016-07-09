@@ -21,7 +21,8 @@
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0-0"
+    "react": "^0.14.0 || ^15.0",
+    "react-dom": "^0.14.0 || ^15.0"
   },
   "devDependencies": {
     "ava": "^0.14.0",
