@@ -11,6 +11,8 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function IndicatorDots(props) {
+  if (props.total < 2) return _react2.default.createElement('div', { style: styles.wrapper });
+
   var dots = [];
   for (var i = 0; i < props.total; i++) {
     var dotStyle = {
@@ -20,9 +22,9 @@ function IndicatorDots(props) {
       borderRadius: '4px',
       backgroundColor: 'white',
       margin: '7px 5px',
+      opacity: props.index === i ? '1' : '0.3',
       transitionDuration: '300ms'
     };
-    dotStyle.opacity = props.index === i ? '1' : '0.3';
     dots.push(_react2.default.createElement('span', { key: i, style: dotStyle }));
   }
   return _react2.default.createElement(
