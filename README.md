@@ -1,6 +1,6 @@
 # re-carousel [![npm](https://img.shields.io/npm/v/re-carousel.svg?style=flat-square)](https://www.npmjs.com/package/re-carousel)
 
-React carousel component, simplified. 7KB when minified, with zero dependency.
+React carousel component, simplified. 2KB gzipped, zero dependency.
 
 demo: https://amio.github.io/re-carousel/
 
