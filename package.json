@@ -21,8 +21,8 @@
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0",
-    "react-dom": "^0.14.0 || ^15.0"
+    "react": "^0.14.0 || 15.x",
+    "react-dom": "^0.14.0 || 15.x"
   },
   "devDependencies": {
     "ava": "^0.15.2",
@@ -31,13 +31,13 @@
     "babel-preset-react": "^6.5.0",
     "enzyme": "^2.4.1",
     "eslint": "^3.0.1",
-    "eslint-config-standard": "^5.3.0",
+    "eslint-config-standard": "^6.0.0-beta.0",
     "eslint-config-standard-react": "^3.0.0",
     "eslint-plugin-promise": "^2.0.0",
     "eslint-plugin-react": "^5.2.2",
     "eslint-plugin-standard": "^2.0.0",
     "gh-pages": "^0.11.0",
-    "react-addons-test-utils": "^15.2.1",
+    "react-addons-test-utils": "15.x",
     "rollup": "^0.33.1",
     "watch": "^0.19.1"
   },
