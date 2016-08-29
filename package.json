@@ -11,8 +11,7 @@
     "example": "cp example/*.html gh-pages && babel example -d gh-pages",
     "example:watch": "watch 'npm run example' example src",
     "preghp": "npm run example",
-    "ghp": "gh-pages -d gh-pages -b gh-pages",
-    "prepublish": "test ! -d src"
+    "ghp": "gh-pages -d gh-pages -b gh-pages"
   },
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
