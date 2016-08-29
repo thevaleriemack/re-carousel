@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "babel src -d dist",
-    "test": "ava test/**/*.spec.js",
+    "test": "eslint src && ava test/**/*.spec.js",
     "preexample": "npm run build && rm -rf ./gh-pages && cp -R dist gh-pages",
     "example": "cp example/*.html gh-pages && babel example -d gh-pages",
     "example:watch": "watch 'npm run example' example src",
