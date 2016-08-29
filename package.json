@@ -5,15 +5,14 @@
   "main": "carousel.js",
   "scripts": {
     "prebuild": "rm -rf ./dist",
-    "build": "babel src -d dist",
+    "build": "babel src -d dist && cp LICENSE README.md package.json dist",
     "test": "eslint src && ava test/**/*.spec.js",
     "preexample": "npm run build && rm -rf ./gh-pages && cp -R dist gh-pages",
     "example": "cp example/*.html gh-pages && babel example -d gh-pages",
     "example:watch": "watch 'npm run example' example src",
     "preghp": "npm run example",
     "ghp": "gh-pages -d gh-pages -b gh-pages",
-    "prepublish": "npm run build && cp dist/* ./",
-    "postpublish": "rm ./*.js"
+    "prepublish": "test ! -d src"
   },
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
