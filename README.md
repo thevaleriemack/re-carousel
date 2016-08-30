@@ -58,3 +58,12 @@ All attributes are optional.
     </Carousel>
   }
   ```
+
+### Contributes
+
+For testing locally:
+
+```bash
+npm run example:watch # compile codes lively
+serve gh-pages # example page are compiled in gh-pages/ folder
+```
