@@ -1,21 +1,12 @@
 import React from 'react'
 
-function IndicatorDots (props) {
+export default function IndicatorDots (props) {
+  // Hide dots when there is only one dot.
   if (props.total < 2) return <div style={styles.wrapper} />
 
   const dots = []
   for (let i = 0; i < props.total; i++) {
-    const dotStyle = {
-      display: 'inline-block',
-      height: '8px',
-      width: '8px',
-      borderRadius: '4px',
-      backgroundColor: 'white',
-      margin: '7px 5px',
-      opacity: props.index === i ? '1' : '0.3',
-      transitionDuration: '300ms'
-    }
-    dots.push(<span key={i} style={dotStyle} />)
+    dots.push(<Dot key={i} selected={props.index === i} />)
   }
   return <div style={styles.wrapper}>{dots}</div>
 }
@@ -35,4 +26,17 @@ const styles = {
   }
 }
 
-export default IndicatorDots
+function Dot (props) {
+  return (
+    <span style={{
+      display: 'inline-block',
+      height: '8px',
+      width: '8px',
+      borderRadius: '4px',
+      backgroundColor: 'white',
+      margin: '7px 5px',
+      opacity: props.selected ? '1' : '0.3',
+      transitionDuration: '300ms'
+    }} />
+  )
+}
