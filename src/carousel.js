@@ -25,8 +25,6 @@ class Carousel extends React.Component {
   }
 
   componentDidMount () {
-    this.refs.wrapper.addEventListener('touchstart', this.onTouchStart, true)
-    this.refs.wrapper.addEventListener('mousedown', this.onTouchStart, true)
     this.readyAutoSlide()
   }
 
@@ -113,8 +111,8 @@ class Carousel extends React.Component {
   onTouchEnd (e) {
     this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove)
     this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove)
-    this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd)
-    this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd)
+    this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd, true)
+    this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd, true)
 
     const { deltaX, deltaY } = this.state
     if (this.isMovingOnAxis(deltaX, deltaY)) {
@@ -216,7 +214,10 @@ class Carousel extends React.Component {
     const wrapperStyle = objectAssign(styles.wrapper, this.props.style)
     const Indicator = this.props.indicator
     return (
-      <div ref='wrapper' style={wrapperStyle}>
+      <div ref='wrapper' style={wrapperStyle}
+        onTouchStart={this.onTouchStart}
+        onMouseDown={this.onTouchStart}
+        >
         {this.state.frames.map((frame, i) => {
           const frameStyle = objectAssign({zIndex: 99 - i}, styles.frame)
           return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
