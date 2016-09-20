@@ -9,8 +9,6 @@ class Carousel extends React.Component {
     this.onTouchStart = this.onTouchStart.bind(this)
     this.onTouchMove = this.onTouchMove.bind(this)
     this.onTouchEnd = this.onTouchEnd.bind(this)
-
-    this.readyAutoSlide = this.readyAutoSlide.bind(this)
   }
 
   generateStateFromProps (props) {
@@ -51,15 +49,20 @@ class Carousel extends React.Component {
     this.setState({
       slider: setTimeout(() => {
         const direction = {x: 'left', y: 'up'}[this.props.axis]
-        // prepare frames
-        this.updateFrameSize()
-        this.moveFramesBy(0, 0)
-        this.updateFrameSize()
-        // make the move
-        this.moveFramesTowards(direction)
-        this.readyAutoSlide()
+        this.slideTowards(direction)
       }, this.props.interval)
     })
+  }
+
+  slideTowards (direction) {
+    // prepare frames
+    this.updateFrameSize()
+    this.moveFramesBy(0, 0)
+    this.updateFrameSize()
+    // make the move
+    this.moveFramesTowards(direction)
+
+    this.readyAutoSlide()
   }
 
   onTouchStart (e) {
