@@ -1,9 +1,9 @@
-import { React, Component } from 'react'
-import { render } from 'react-dom'
+const React = require('react')
+const ReactDOM = require('react-dom')
 
 window.requireCommonjs(['carousel.js', 'indicator-dots.js'], function (Carousel, Dots) {
   // Main App
-  class App extends Component {
+  class App extends React.Component {
     constructor () {
       super()
       this.state = {
@@ -46,5 +46,5 @@ window.requireCommonjs(['carousel.js', 'indicator-dots.js'], function (Carousel,
     }
   }
 
-  render(<App />, document.getElementById('app'))
+  ReactDOM.render(<App />, document.getElementById('app'))
 })
