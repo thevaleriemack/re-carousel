@@ -40,3 +40,7 @@ function Dot (props) {
     }} />
   )
 }
+
+Dot.propTypes = {
+  selected: React.PropTypes.bool
+}
