@@ -1,6 +1,6 @@
 {
   "name": "re-carousel",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "React carousel component, simplified.",
   "repository": "amio/re-carousel.git",
   "author": "Amio <amio.cn@gmail.com>",
@@ -26,7 +26,7 @@
     "babel-cli": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
-    "enzyme": "^2.4.1",
+    "enzyme": "^2.7.0",
     "gh-pages": "^0.12.0",
     "react": "15.x",
     "react-addons-test-utils": "15.x",
