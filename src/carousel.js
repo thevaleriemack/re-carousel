@@ -16,91 +16,55 @@ const styles = {
 }
 
 class Carousel extends React.Component {
-  constructor (props, context) {
-    super(props, context)
-    this.state = this.generateStateFromProps(props)
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      frames: props.frames || props.children || [],
+      current: 0
+    }
 
     this.onTouchStart = this.onTouchStart.bind(this)
     this.onTouchMove = this.onTouchMove.bind(this)
     this.onTouchEnd = this.onTouchEnd.bind(this)
-  }
+    this.autoSlide = this.autoSlide.bind(this)
 
-  generateStateFromProps (props) {
-    const frames = props.frames || props.children
-    return {
-      frames: frames,
-      total: frames.length,
-      auto: props.auto && frames.length > 1,
-      vertical: props.axis === 'y',
-      horizontal: props.axis === 'x',
-      current: 0
+    if (props.loop === false && props.auto) {
+      console.warn('[re-carousel] Auto-slide only works in loop mode.')
     }
+    window.ccc = this
   }
 
   componentDidMount () {
-    this.readyAutoSlide()
-  }
+    this.prepareAutoSlide()
 
-  componentWillUnmount () {
-    clearTimeout(this.state.slider)
-  }
-
-  componentWillReceiveProps (props) {
-    this.setState(this.generateStateFromProps(props))
-  }
-
-  updateFrameSize () {
-    const { width, height } = window.getComputedStyle(this.refs.wrapper)
-    this.setState({
-      frameWidth: parseFloat(width.split('px')[0]),
-      frameHeight: parseFloat(height.split('px')[0])
-    })
-  }
-
-  readyAutoSlide () {
-    if (!this.state.auto) return
-    if (this.state.slider) clearTimeout(this.state.slider)
-
-    this.setState({
-      slider: setTimeout(() => {
-        const direction = {x: 'left', y: 'up'}[this.props.axis]
-        this.slideTowards(direction)
-      }, this.props.interval)
-    })
-  }
-
-  slideTowards (direction) {
-    // prepare frames
-    this.updateFrameSize()
-    this.moveFramesBy(0, 0)
-    this.updateFrameSize()
-    // make the move
-    this.moveFramesTowards(direction)
-
-    this.readyAutoSlide()
+    for (let i = 1; i < this.state.frames.length; i++) {
+      this.refs['f' + i].style.opacity = 0
+    }
   }
 
   onTouchStart (e) {
     if (this.state.total < 2) return
 
+    this.stopAutoSlide()
     this.updateFrameSize()
-    clearTimeout(this.state.slider)
+    this.prepareSiblingFrames()
+
     const { pageX, pageY } = (e.touches && e.touches[0]) || e
     this.setState({
       startX: pageX,
-      startY: pageY,
-      deltaX: 0,
-      deltaY: 0
+      startY: pageY
     })
 
-    this.refs.wrapper.addEventListener('touchmove', this.onTouchMove)
-    this.refs.wrapper.addEventListener('mousemove', this.onTouchMove)
+    this.refs.wrapper.addEventListener('touchmove', this.onTouchMove, {passive: true})
+    this.refs.wrapper.addEventListener('mousemove', this.onTouchMove, {passive: true})
     this.refs.wrapper.addEventListener('touchend', this.onTouchEnd, true)
     this.refs.wrapper.addEventListener('mouseup', this.onTouchEnd, true)
   }
 
   onTouchMove (e) {
     if (e.touches && e.touches.length > 1) return
+    this.stopAutoSlide()
 
     const { pageX, pageY } = (e.touches && e.touches[0]) || e
     const deltaX = pageX - this.state.startX
@@ -110,106 +74,136 @@ class Carousel extends React.Component {
       deltaY: deltaY
     })
 
-    if (!this.isMovingOnAxis(deltaX, deltaY)) return
-
     this.moveFramesBy(deltaX, deltaY)
   }
 
-  isMovingOnAxis (deltaX, deltaY) {
-    switch (this.props.axis) {
-      case 'x':
-        return Math.abs(deltaX) > Math.abs(deltaY)
-      case 'y':
-        return Math.abs(deltaX) < Math.abs(deltaY)
-      default:
-        return false
-    }
-  }
+  onTouchEnd () {
+    const direction = this.decideEndPosition()
+    direction && this.transitFramesTowards(direction)
 
-  onTouchEnd (e) {
+    // cleanup
     this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove)
     this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove)
     this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd, true)
     this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd, true)
 
-    const { deltaX, deltaY } = this.state
-    if (this.isMovingOnAxis(deltaX, deltaY)) {
-      this.moveFramesTowards(this.decideTargetPosition(deltaX, deltaY))
-    }
+    this.prepareAutoSlide()
+  }
 
-    this.readyAutoSlide()
+  decideEndPosition () {
+    const { deltaX = 0, deltaY = 0, current, frames } = this.state
+    const { axis, loop, minMove } = this.props
+
+    switch (axis) {
+      case 'x':
+        if (loop === false) {
+          if (current === 0 && deltaX > 0) return 'origin'
+          if (current === frames.length - 1 && deltaX < 0) return 'origin'
+        }
+        if (Math.abs(deltaX) < minMove) return 'origin'
+        return deltaX > 0 ? 'right' : 'left'
+      case 'y':
+        if (loop === false) {
+          if (current === 0 && deltaY > 0) return 'origin'
+          if (current === frames.length - 1 && deltaY < 0) return 'origin'
+        }
+        if (Math.abs(deltaY) < minMove) return 'origin'
+        return deltaY > 0 ? 'down' : 'up'
+      default:
+    }
   }
 
   moveFramesBy (deltaX, deltaY) {
-    const { prev, current, next } = this.getSiblingFrames()
-    toggleAnimation(prev, 0)
-    toggleAnimation(current, 0)
-    toggleAnimation(next, 0)
-    if (this.state.vertical) {
-      translate(current, 0, deltaY)
-      if (deltaY > 0) {
-        translate(prev, 0, deltaY - this.state.frameHeight)
-      } else {
-        translate(next, 0, deltaY + this.state.frameHeight)
-      }
-    } else {
-      translate(current, deltaX, 0)
-      if (deltaX > 0) {
-        translate(prev, deltaX - this.state.frameWidth, 0)
-      } else {
-        translate(next, deltaX + this.state.frameWidth, 0)
-      }
-    }
-  }
+    const { prev, current, next } = this.state.movingFrames
+    const { frameWidth, frameHeight } = this.state
 
-  moveFramesTowards (direction) {
-    const { prev, current, next } = this.getSiblingFrames()
-    toggleAnimation(prev, this.props.duration)
-    toggleAnimation(current, this.props.duration)
-    toggleAnimation(next, this.props.duration)
-    let newCurrentId
-    switch (direction) {
-      case 'up':
-        translate(current, 0, -this.state.frameHeight)
-        translate(next, 0, 0)
-        newCurrentId = this.getFrameId('next')
-        break
-      case 'down':
-        translate(current, 0, this.state.frameHeight)
-        translate(prev, 0, 0)
-        newCurrentId = this.getFrameId('prev')
-        break
-      case 'left':
-        translate(current, -this.state.frameWidth, 0)
-        translate(next, 0, 0)
-        newCurrentId = this.getFrameId('next')
-        break
-      case 'right':
-        translate(current, this.state.frameWidth, 0)
-        translate(prev, 0, 0)
-        newCurrentId = this.getFrameId('prev')
-        break
-      default:
-        return
-    }
-    // Update state
-    this.setState({current: newCurrentId})
-  }
-
-  decideTargetPosition (deltaX, deltaY) {
-    if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) return 'origin'
     switch (this.props.axis) {
       case 'x':
-        return deltaX > 0 ? 'right' : 'left'
+        translateXY(current, deltaX, 0)
+        translateXY(next, deltaX + frameWidth, 0)
+        translateXY(prev, deltaX - frameWidth, 0)
+        break
       case 'y':
-        return deltaY > 0 ? 'down' : 'up'
+        translateXY(current, 0, deltaY)
+        translateXY(next, 0, deltaY + frameHeight)
+        translateXY(prev, 0, deltaY - frameHeight)
+        break
       default:
-        console.error('Decide: on %s axis', this.props.axis, deltaX, deltaY)
     }
+  }
+
+  prepareAutoSlide () {
+    this.stopAutoSlide()
+    this.updateFrameSize(() => {
+      this.prepareSiblingFrames()
+    })
+
+    if (this.props.auto) {
+      const slideTimeoutID = setTimeout(this.autoSlide, this.props.interval)
+      this.setState({ slider: slideTimeoutID })
+    }
+  }
+
+  // auto slide to 'next' or 'prev'
+  autoSlide (rel) {
+    switch (rel) {
+      case 'prev':
+        this.transitFramesTowards(this.props.axis === 'x' ? 'right' : 'down')
+        break
+      case 'next':
+      default:
+        this.transitFramesTowards(this.props.axis === 'x' ? 'left' : 'up')
+    }
+
+    // prepare next move
+    this.prepareAutoSlide()
+  }
+
+  next () { this.autoSlide('next') }
+  prev () { this.autoSlide('prev') }
+
+  stopAutoSlide () {
+    clearTimeout(this.state.slider)
+  }
+
+  updateFrameSize (cb) {
+    const { width, height } = window.getComputedStyle(this.refs.wrapper)
+    this.setState({
+      frameWidth: parseInt(width, 10),
+      frameHeight: parseInt(height, 10)
+    }, cb)
+  }
+
+  prepareSiblingFrames () {
+    const siblings = {
+      current: this.refs['f' + this.getFrameId()],
+      prev: this.refs['f' + this.getFrameId('prev')],
+      next: this.refs['f' + this.getFrameId('next')]
+    }
+
+    if (!this.props.loop) {
+      this.state.current === 0 && (siblings.prev = undefined)
+      this.state.current === this.state.frames.length - 1 && (siblings.next = undefined)
+    }
+
+    this.setState({ movingFrames: siblings })
+
+    // prepare frames position
+    translateXY(siblings.current, 0, 0)
+    if (this.props.axis === 'x') {
+      translateXY(siblings.prev, -this.state.frameWidth, 0)
+      translateXY(siblings.next, this.state.frameWidth, 0)
+    } else {
+      translateXY(siblings.prev, 0, -this.state.frameHeight)
+      translateXY(siblings.next, 0, this.state.frameHeight)
+    }
+
+    return siblings
   }
 
   getFrameId (pos) {
-    const { total, current } = this.state
+    const { frames, current } = this.state
+    const total = frames.length
     switch (pos) {
       case 'prev':
         return (current - 1 + total) % total
@@ -220,27 +214,70 @@ class Carousel extends React.Component {
     }
   }
 
-  getSiblingFrames () {
-    return {
-      current: this.refs['f' + this.getFrameId()],
-      prev: this.refs['f' + this.getFrameId('prev')],
-      next: this.refs['f' + this.getFrameId('next')]
+  transitFramesTowards (direction) {
+    const { prev, current, next } = this.state.movingFrames
+    const { duration, axis } = this.props
+
+    let newCurrentId = this.state.current
+    switch (direction) {
+      case 'up':
+        translateXY(current, 0, -this.state.frameHeight, duration)
+        translateXY(next, 0, 0, duration)
+        newCurrentId = this.getFrameId('next')
+        break
+      case 'down':
+        translateXY(current, 0, this.state.frameHeight, duration)
+        translateXY(prev, 0, 0, duration)
+        newCurrentId = this.getFrameId('prev')
+        break
+      case 'left':
+        translateXY(current, -this.state.frameWidth, 0, duration)
+        translateXY(next, 0, 0, duration)
+        newCurrentId = this.getFrameId('next')
+        break
+      case 'right':
+        translateXY(current, this.state.frameWidth, 0, duration)
+        translateXY(prev, 0, 0, duration)
+        newCurrentId = this.getFrameId('prev')
+        break
+      default: // back to origin
+        translateXY(current, 0, 0, duration)
+        if (axis === 'x') {
+          translateXY(prev, -this.state.frameWidth, 0, duration)
+          translateXY(next, this.state.frameWidth, 0, duration)
+        } else if (axis === 'y') {
+          translateXY(prev, 0, -this.state.frameHeight, duration)
+          translateXY(next, 0, this.state.frameHeight, duration)
+        }
     }
+
+    this.setState({ current: newCurrentId })
   }
+
+  // debugFrames () {
+  //   console.log('>>> DEBUG-FRAMES')
+  //   const len = this.state.frames.length
+  //   for (let i = 0; i < len; ++i) {
+  //     const ref = this.refs['f' + i]
+  //     console.info(ref.innerText.trim(), ref.style.transform)
+  //   }
+  // }
 
   render () {
     const wrapperStyle = objectAssign(styles.wrapper, this.props.style)
+    const { frames, current } = this.state
     const Indicator = this.props.indicator
+
     return (
       <div ref='wrapper' style={wrapperStyle}
         onTouchStart={this.onTouchStart}
         onMouseDown={this.onTouchStart}
         >
-        {this.state.frames.map((frame, i) => {
+        {frames.map((frame, i) => {
           const frameStyle = objectAssign({zIndex: 99 - i}, styles.frame)
           return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
         })}
-        {Indicator && <Indicator index={this.state.current} total={this.state.total} />}
+        {Indicator && <Indicator index={current} total={frames.length} />}
         {this.props.frames && this.props.children}
       </div>
     )
@@ -250,28 +287,35 @@ class Carousel extends React.Component {
 Carousel.propTypes = {
   axis: propTypes.oneOf(['x', 'y']),
   auto: propTypes.bool,
+  loop: propTypes.bool,
   interval: propTypes.number,
   duration: propTypes.number,
   indicator: propTypes.func,
   frames: propTypes.arrayOf(propTypes.element),
-  style: propTypes.object
+  style: propTypes.object,
+  minMove: propTypes.number
 }
 
 Carousel.defaultProps = {
   axis: 'x',
   auto: false,
-  interval: 4000,
-  duration: 300
+  loop: false,
+  interval: 5000,
+  duration: 300,
+  minMove: 42
 }
 
-function translate (el, x, y, withAnimation) {
+function translateXY (el, x, y, duration = 0) {
+  if (!el) return
+
+  el.style.opacity = '1'
+
+  // animation
+  el.style.transitionDuration = duration + 'ms'
+  el.style.webkitTransitionDuration = duration + 'ms'
+
   el.style.transfrom = `translate(${x}px, ${y}px)`
   el.style.webkitTransform = `translate(${x}px, ${y}px) translateZ(0)`
-}
-
-function toggleAnimation (el, duration) {
-  duration = duration ? duration + 'ms' : ''
-  el.style.transitionDuration = el.style.webkitTransitionDuration = duration
 }
 
 function objectAssign (target) {
