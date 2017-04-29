@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Carousel from './carousel'
 import Dots from './indicator-dots'
+import Button from './button'
 import './index.css'
 
 // Main App
@@ -24,7 +25,7 @@ class App extends React.Component {
           <span className={this.state.axis === 'y' ? 'axis current' : 'axis'}
             onClick={this.setAxis('y')}>vertical</span>
         </header>
-        <Carousel auto indicator={Dots} axis={this.state.axis}>
+        <Carousel loop auto axis={this.state.axis} widgets={[Dots, Button]}>
           <p style={{backgroundColor: 'royalblue', height: '100%'}}>FRAME 1</p>
           <p style={{backgroundColor: 'orange', height: '100%'}}>FRAME 2</p>
           <p style={{backgroundColor: 'orchid', height: '100%'}}>FRAME 3</p>

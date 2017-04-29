@@ -1,29 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-export default function IndicatorDots (props) {
-  const wrapperStyle = {
-    position: 'absolute',
-    width: '100%',
-    zIndex: '100',
-    bottom: '0px',
-    textAlign: 'center'
-  }
-  // Hide dots when there is only one dot.
-  if (props.total < 2) return <div style={wrapperStyle} />
-
-  const dots = []
-  for (let i = 0; i < props.total; i++) {
-    dots.push(<Dot key={i} selected={props.index === i} />)
-  }
-  return <div style={wrapperStyle}>{dots}</div>
-}
-
-IndicatorDots.propTypes = {
-  index: propTypes.number.isRequired,
-  total: propTypes.number.isRequired
-}
-
 function Dot (props) {
   return (
     <span style={{
@@ -39,6 +16,29 @@ function Dot (props) {
   )
 }
 
-Dot.propTypes = {
-  selected: propTypes.bool
+export default function IndicatorDots (props) {
+  const wrapperStyle = {
+    position: 'absolute',
+    width: '100%',
+    zIndex: '100',
+    bottom: '0px',
+    textAlign: 'center'
+  }
+  // Hide dots when there is only one dot.
+  if (props.total < 2) {
+    return <div style={wrapperStyle} />
+  } else {
+    return (
+      <div style={wrapperStyle}>{
+        Array.apply(null, Array(props.total)).map((x, i) => {
+          return <Dot key={i} selected={props.index === i} />
+        })
+      }</div>
+    )
+  }
+}
+
+IndicatorDots.propTypes = {
+  index: propTypes.number.isRequired,
+  total: propTypes.number.isRequired
 }

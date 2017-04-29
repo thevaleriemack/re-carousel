@@ -28,11 +28,12 @@ class Carousel extends React.Component {
     this.onTouchMove = this.onTouchMove.bind(this)
     this.onTouchEnd = this.onTouchEnd.bind(this)
     this.autoSlide = this.autoSlide.bind(this)
+    this.prev = this.prev.bind(this)
+    this.next = this.next.bind(this)
 
     if (props.loop === false && props.auto) {
       console.warn('[re-carousel] Auto-slide only works in loop mode.')
     }
-    window.ccc = this
   }
 
   componentDidMount () {
@@ -46,14 +47,16 @@ class Carousel extends React.Component {
   onTouchStart (e) {
     if (this.state.total < 2) return
 
-    this.stopAutoSlide()
+    this.clearAutoTimeout()
     this.updateFrameSize()
     this.prepareSiblingFrames()
 
     const { pageX, pageY } = (e.touches && e.touches[0]) || e
     this.setState({
       startX: pageX,
-      startY: pageY
+      startY: pageY,
+      deltaX: 0,
+      deltaY: 0
     })
 
     this.refs.wrapper.addEventListener('touchmove', this.onTouchMove, {passive: true})
@@ -64,15 +67,27 @@ class Carousel extends React.Component {
 
   onTouchMove (e) {
     if (e.touches && e.touches.length > 1) return
-    this.stopAutoSlide()
+    this.clearAutoTimeout()
 
     const { pageX, pageY } = (e.touches && e.touches[0]) || e
-    const deltaX = pageX - this.state.startX
-    const deltaY = pageY - this.state.startY
+    let deltaX = pageX - this.state.startX
+    let deltaY = pageY - this.state.startY
     this.setState({
       deltaX: deltaX,
       deltaY: deltaY
     })
+
+    // when reach frames edge in non-loop mode, reduce drag effect.
+    if (!this.props.loop) {
+      if (this.state.current === this.state.frames.length - 1) {
+        deltaX < 0 && (deltaX /= 3)
+        deltaY < 0 && (deltaY /= 3)
+      }
+      if (this.state.current === 0) {
+        deltaX > 0 && (deltaX /= 3)
+        deltaY > 0 && (deltaY /= 3)
+      }
+    }
 
     this.moveFramesBy(deltaX, deltaY)
   }
@@ -133,7 +148,7 @@ class Carousel extends React.Component {
   }
 
   prepareAutoSlide () {
-    this.stopAutoSlide()
+    this.clearAutoTimeout()
     this.updateFrameSize(() => {
       this.prepareSiblingFrames()
     })
@@ -146,6 +161,8 @@ class Carousel extends React.Component {
 
   // auto slide to 'next' or 'prev'
   autoSlide (rel) {
+    this.clearAutoTimeout()
+
     switch (rel) {
       case 'prev':
         this.transitFramesTowards(this.props.axis === 'x' ? 'right' : 'down')
@@ -159,18 +176,26 @@ class Carousel extends React.Component {
     this.prepareAutoSlide()
   }
 
-  next () { this.autoSlide('next') }
-  prev () { this.autoSlide('prev') }
+  next () {
+    const { current, frames } = this.state
+    if (!this.props.loop && current === frames.length - 1) return false
+    this.autoSlide('next')
+  }
 
-  stopAutoSlide () {
+  prev () {
+    if (!this.props.loop && this.state.current === 0) return false
+    this.autoSlide('prev')
+  }
+
+  clearAutoTimeout () {
     clearTimeout(this.state.slider)
   }
 
   updateFrameSize (cb) {
     const { width, height } = window.getComputedStyle(this.refs.wrapper)
     this.setState({
-      frameWidth: parseInt(width, 10),
-      frameHeight: parseInt(height, 10)
+      frameWidth: parseFloat(width.split('px')[0]),
+      frameHeight: parseFloat(height.split('px')[0])
     }, cb)
   }
 
@@ -255,7 +280,7 @@ class Carousel extends React.Component {
   }
 
   // debugFrames () {
-  //   console.log('>>> DEBUG-FRAMES')
+  //   console.log('>>> DEBUG-FRAMES -', this.state.current + 1)
   //   const len = this.state.frames.length
   //   for (let i = 0; i < len; ++i) {
   //     const ref = this.refs['f' + i]
@@ -264,21 +289,33 @@ class Carousel extends React.Component {
   // }
 
   render () {
-    const wrapperStyle = objectAssign(styles.wrapper, this.props.style)
     const { frames, current } = this.state
-    const Indicator = this.props.indicator
+    const { widgets, axis, loop, auto, interval } = this.props
 
     return (
-      <div ref='wrapper' style={wrapperStyle}
+      <div
+        ref='wrapper'
+        style={objectAssign(styles.wrapper, this.props.style)}
         onTouchStart={this.onTouchStart}
-        onMouseDown={this.onTouchStart}
-        >
-        {frames.map((frame, i) => {
-          const frameStyle = objectAssign({zIndex: 99 - i}, styles.frame)
-          return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
-        })}
-        {Indicator && <Indicator index={current} total={frames.length} />}
-        {this.props.frames && this.props.children}
+        onMouseDown={this.onTouchStart} >
+        {
+          frames.map((frame, i) => {
+            const frameStyle = objectAssign({zIndex: 99 - i}, styles.frame)
+            return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
+          })
+        }
+        {
+          widgets && [].concat(widgets).map((Widget, i) => (
+            <Widget
+              key={i}
+              index={current}
+              total={frames.length}
+              prevHandler={this.prev}
+              nextHandler={this.next}
+              axis={axis} loop={loop} auto={auto} interval={interval} />
+          ))
+        }
+        { this.props.frames && this.props.children }
       </div>
     )
   }
@@ -290,7 +327,7 @@ Carousel.propTypes = {
   loop: propTypes.bool,
   interval: propTypes.number,
   duration: propTypes.number,
-  indicator: propTypes.func,
+  widgets: propTypes.arrayOf(propTypes.func),
   frames: propTypes.arrayOf(propTypes.element),
   style: propTypes.object,
   minMove: propTypes.number
