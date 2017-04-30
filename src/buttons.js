@@ -26,7 +26,7 @@ const styles = {
   }
 }
 
-export default function Button (props) {
+export default function Buttons (props) {
   const prevBtnStyle = Object.assign({}, styles.btn, styles.left)
   const nextBtnStyle = Object.assign({}, styles.btn, styles.right)
   const { index, total, loop, prevHandler, nextHandler } = props
@@ -42,7 +42,7 @@ export default function Button (props) {
   )
 }
 
-Button.propTypes = {
+Buttons.propTypes = {
   index: propTypes.number.isRequired,
   total: propTypes.number.isRequired,
   prevHandler: propTypes.func,

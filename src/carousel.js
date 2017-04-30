@@ -1,5 +1,5 @@
 import React from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 const styles = {
   wrapper: {
@@ -322,15 +322,15 @@ class Carousel extends React.Component {
 }
 
 Carousel.propTypes = {
-  axis: propTypes.oneOf(['x', 'y']),
-  auto: propTypes.bool,
-  loop: propTypes.bool,
-  interval: propTypes.number,
-  duration: propTypes.number,
-  widgets: propTypes.arrayOf(propTypes.func),
-  frames: propTypes.arrayOf(propTypes.element),
-  style: propTypes.object,
-  minMove: propTypes.number
+  axis: PropTypes.oneOf(['x', 'y']),
+  auto: PropTypes.bool,
+  loop: PropTypes.bool,
+  interval: PropTypes.number,
+  duration: PropTypes.number,
+  widgets: PropTypes.arrayOf(PropTypes.func),
+  frames: PropTypes.arrayOf(PropTypes.element),
+  style: PropTypes.object,
+  minMove: PropTypes.number
 }
 
 Carousel.defaultProps = {

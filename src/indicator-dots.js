@@ -1,5 +1,5 @@
 import React from 'react'
-import propTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 function Dot (props) {
   return (
@@ -38,7 +38,7 @@ export default function IndicatorDots (props) {
   }
 }
 
-IndicatorDots.propTypes = {
-  index: propTypes.number.isRequired,
-  total: propTypes.number.isRequired
-}
+// IndicatorDots.propTypes = {
+//   index: PropTypes.number.isRequired,
+//   total: PropTypes.number.isRequired
+// }
