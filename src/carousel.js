@@ -20,7 +20,7 @@ class Carousel extends React.Component {
     super(props)
 
     this.state = {
-      frames: props.frames || props.children || [],
+      frames: [].concat(props.frames || props.children || []),
       current: 0
     }
 
@@ -148,12 +148,15 @@ class Carousel extends React.Component {
   }
 
   prepareAutoSlide () {
+    if (this.state.frames.length < 2) return
+
     this.clearAutoTimeout()
     this.updateFrameSize(() => {
       this.prepareSiblingFrames()
     })
 
-    if (this.props.auto) {
+    if (this.props.loop && this.props.auto) {
+      // auto slide only avalible in loop mode
       const slideTimeoutID = setTimeout(this.autoSlide, this.props.interval)
       this.setState({ slider: slideTimeoutID })
     }
