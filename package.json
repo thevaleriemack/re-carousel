@@ -1,5 +1,6 @@
 {
   "name": "re-carousel",
+  "description": "Minimal carousel component for React",
   "version": "2.0.2",
   "main": "dist/carousel.js",
   "module": "src/carousel.js",
