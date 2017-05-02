@@ -24,13 +24,16 @@
     "build": "NODE_ENV=production rollup -c",
     "start": "react-scripts start",
     "build-pages": "react-scripts build",
-    "preghpages": "npm run build-pages",
-    "ghpages": "gh-pages -d build -b gh-pages",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build-pages",
+    "deploy": "gh-pages -d build"
   },
   "files": [
     "dist/carousel.js",
     "src/carousel.js"
-  ]
+  ],
+  "homepage": "https://amio.github.io/re-carousel",
+  "repository": "amio/re-carousel",
+  "license": "MIT",
 }
