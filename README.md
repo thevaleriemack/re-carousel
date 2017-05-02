@@ -28,9 +28,9 @@ All attributes are optional.
 - `interval` {number} (`4000`ms by default) interval for auto sliding.
 - `duration` {number} (`300`ms by default) duration for animation.
 - `widgets` {Array of ReactClass} Indicator and switcher could be various,
-  so it's not builtin. Here is some example code of custom widgets:
-  - [dots indicator](src/indicator-dots.js)
-  - [prev/next buttons](src/buttons.js)
+  so it's not builtin. Here's some example custom widgets
+  ([dots indicator](src/indicator-dots.js),
+  [prev/next buttons](src/buttons.js)):
 
   ```javascript
   import Carousel from 're-carousel'
