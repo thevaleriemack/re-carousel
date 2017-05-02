@@ -13,6 +13,7 @@ const styles = {
     width: '30px',
     height: '30px',
     cursor: 'pointer',
+    userSelect: 'none',
     position: 'absolute',
     bottom: '0',
     font: '16px/30px sans-serif',

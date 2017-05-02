@@ -102,7 +102,7 @@ class Carousel extends React.Component {
     this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd, true)
     this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd, true)
 
-    this.prepareAutoSlide()
+    setTimeout(() => this.prepareAutoSlide(), this.props.duration)
   }
 
   decideEndPosition () {
@@ -135,13 +135,19 @@ class Carousel extends React.Component {
     switch (this.props.axis) {
       case 'x':
         translateXY(current, deltaX, 0)
-        translateXY(next, deltaX + frameWidth, 0)
-        translateXY(prev, deltaX - frameWidth, 0)
+        if (deltaX < 0) {
+          translateXY(next, deltaX + frameWidth, 0)
+        } else {
+          translateXY(prev, deltaX - frameWidth, 0)
+        }
         break
       case 'y':
         translateXY(current, 0, deltaY)
-        translateXY(next, 0, deltaY + frameHeight)
-        translateXY(prev, 0, deltaY - frameHeight)
+        if (deltaY < 0) {
+          translateXY(next, 0, deltaY + frameHeight)
+        } else {
+          translateXY(prev, 0, deltaY - frameHeight)
+        }
         break
       default:
     }
@@ -175,8 +181,8 @@ class Carousel extends React.Component {
         this.transitFramesTowards(this.props.axis === 'x' ? 'left' : 'up')
     }
 
-    // prepare next move
-    this.prepareAutoSlide()
+    // prepare next move after animation
+    setTimeout(() => this.prepareAutoSlide(), this.props.duration)
   }
 
   next () {
@@ -283,7 +289,7 @@ class Carousel extends React.Component {
   }
 
   // debugFrames () {
-  //   console.log('>>> DEBUG-FRAMES -', this.state.current + 1)
+  //   console.log('>>> DEBUG-FRAMES: current', this.state.current)
   //   const len = this.state.frames.length
   //   for (let i = 0; i < len; ++i) {
   //     const ref = this.refs['f' + i]
