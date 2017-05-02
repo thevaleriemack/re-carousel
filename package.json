@@ -1,6 +1,6 @@
 {
   "name": "re-carousel",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "dist/carousel.js",
   "module": "src/carousel.js",
   "dependencies": {
