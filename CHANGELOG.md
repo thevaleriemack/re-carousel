@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - CHANGELOG.md
+### Fixed
+- A glitch while sliding in 2 frames.
 
 ## [2.0.1] - 2017-05-02
 ### Added
@@ -16,5 +18,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove `indicator` attribute in favor of `widgets`.
 
 
-[Unreleased]: https://github.com/amio/re-carousel/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/amio/re-carousel/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/amio/re-carousel/compare/v2.0.2...v2.0.1
 [2.0.1]: https://github.com/amio/re-carousel/compare/v2.0.1...v1.2.6
