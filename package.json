@@ -25,7 +25,8 @@
     "build": "NODE_ENV=production rollup -c",
     "start": "react-scripts start",
     "build-pages": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
+    "test": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build-pages",
     "deploy": "gh-pages -d build"
