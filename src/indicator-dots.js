@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 function Dot (props) {
   return (
@@ -24,8 +24,9 @@ export default function IndicatorDots (props) {
     bottom: '0px',
     textAlign: 'center'
   }
-  // Hide dots when there is only one dot.
+
   if (props.total < 2) {
+    // Hide dots when there is only one dot.
     return <div style={wrapperStyle} />
   } else {
     return (
@@ -38,7 +39,7 @@ export default function IndicatorDots (props) {
   }
 }
 
-// IndicatorDots.propTypes = {
-//   index: PropTypes.number.isRequired,
-//   total: PropTypes.number.isRequired
-// }
+IndicatorDots.propTypes = {
+  index: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired
+}
