@@ -38,16 +38,18 @@ class Carousel extends React.Component {
   }
 
   componentDidMount () {
+    this.mounted = true
     this.prepareAutoSlide()
+
+    // Hide all frames
     for (let i = 1; i < this.state.frames.length; i++) {
       this.refs['f' + i].style.opacity = 0
     }
-    this.mounted = true
   }
 
   componentWillUnmount () {
-    this.clearAutoTimeout()
     this.mounted = false
+    this.clearAutoTimeout()
   }
 
   onTouchStart (e) {
@@ -167,8 +169,8 @@ class Carousel extends React.Component {
       this.prepareSiblingFrames()
     })
 
-    if (this.props.loop && this.props.auto && this.mounted) {
-      // auto slide only avalible in loop mode
+    // auto slide only avalible in loop mode
+    if (this.mounted && this.props.loop && this.props.auto) {
       const slideTimeoutID = setTimeout(this.autoSlide, this.props.interval)
       this.setState({ slider: slideTimeoutID })
     }
