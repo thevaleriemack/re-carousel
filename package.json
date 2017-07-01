@@ -21,7 +21,7 @@
     "rollup-plugin-uglify": "^2.0.0"
   },
   "scripts": {
-    "prepublish": "npm run build",
+    "prepack": "npm run build",
     "build": "NODE_ENV=production rollup -c",
     "start": "react-scripts start",
     "build-pages": "react-scripts build",
