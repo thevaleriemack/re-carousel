@@ -4,6 +4,17 @@
   "version": "2.0.4",
   "main": "dist/carousel.js",
   "module": "src/carousel.js",
+  "scripts": {
+    "prepack": "npm run build",
+    "build": "NODE_ENV=production rollup -c",
+    "start": "react-scripts start",
+    "build-pages": "react-scripts build",
+    "test:watch": "react-scripts test --env=jsdom",
+    "test": "CI=true react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build-pages",
+    "deploy": "gh-pages -d build"
+  },
   "dependencies": {
     "prop-types": "^15.6.0"
   },
@@ -16,20 +27,9 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-scripts": "1.0.17",
-    "rollup": "^0.50.0",
+    "rollup": "^0.51.1",
     "rollup-plugin-buble": "^0.17.0",
     "rollup-plugin-uglify": "^2.0.0"
-  },
-  "scripts": {
-    "prepack": "npm run build",
-    "build": "NODE_ENV=production rollup -c",
-    "start": "react-scripts start",
-    "build-pages": "react-scripts build",
-    "test:watch": "react-scripts test --env=jsdom",
-    "test": "CI=true react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build-pages",
-    "deploy": "gh-pages -d build"
   },
   "files": [
     "dist/carousel.js",
