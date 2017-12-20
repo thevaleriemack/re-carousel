@@ -3,7 +3,6 @@
   "description": "Minimal carousel component for React",
   "version": "2.0.4",
   "main": "dist/carousel.js",
-  "module": "src/carousel.js",
   "scripts": {
     "prepack": "npm run build",
     "build": "NODE_ENV=production rollup -c",
