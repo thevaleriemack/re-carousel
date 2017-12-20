@@ -1,7 +1,7 @@
 {
   "name": "re-carousel",
   "description": "Minimal carousel component for React",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "main": "dist/carousel.js",
   "scripts": {
     "prepack": "npm run build",
