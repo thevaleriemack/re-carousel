@@ -368,7 +368,7 @@ function translateXY (el, x, y, duration = 0) {
   el.style.transitionDuration = duration + 'ms'
   el.style.webkitTransitionDuration = duration + 'ms'
 
-  el.style.transfrom = `translate(${x}px, ${y}px)`
+  el.style.transform = `translate(${x}px, ${y}px)`
   el.style.webkitTransform = `translate(${x}px, ${y}px) translateZ(0)`
 }
 
