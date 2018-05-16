@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0.6] - 2018-05-16
+## [2.0.8] - 2018-05-16
 ### Fixed
 - Drag outside bug #66
 - Prevent default touchmove behavior on mobile browser #103
@@ -43,7 +43,7 @@ A fully rewrite.
 ### Removed
 - Remove `indicator` attribute in favor of `widgets`.
 
-[2.0.6]: https://github.com/amio/re-carousel/compare/v2.0.6...v2.0.5
+[2.0.8]: https://github.com/amio/re-carousel/compare/v2.0.8...v2.0.5
 [2.0.5]: https://github.com/amio/re-carousel/compare/v2.0.5...v2.0.4
 [2.0.4]: https://github.com/amio/re-carousel/compare/v2.0.4...v2.0.3
 [2.0.3]: https://github.com/amio/re-carousel/compare/v2.0.3...v2.0.2
