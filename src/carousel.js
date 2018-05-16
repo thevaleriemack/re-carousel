@@ -51,7 +51,7 @@ class Carousel extends React.Component {
     this.mounted = false
     this.clearAutoTimeout()
   }
-  
+
   componentWillReceiveProps(nextProps) {
     const frames = [].concat(nextProps.frames || nextProps.children || [])
     this.setState({ frames })
@@ -72,10 +72,10 @@ class Carousel extends React.Component {
       deltaY: 0
     })
 
-    this.refs.wrapper.addEventListener('touchmove', this.onTouchMove, {passive: true})
-    this.refs.wrapper.addEventListener('mousemove', this.onTouchMove, {passive: true})
-    this.refs.wrapper.addEventListener('touchend', this.onTouchEnd, true)
-    this.refs.wrapper.addEventListener('mouseup', this.onTouchEnd, true)
+    this.refs.wrapper.addEventListener('touchmove', this.onTouchMove, {capture: true})
+    this.refs.wrapper.addEventListener('mousemove', this.onTouchMove, {capture: true})
+    this.refs.wrapper.addEventListener('touchend', this.onTouchEnd)
+    this.refs.wrapper.addEventListener('mouseup', this.onTouchEnd)
   }
 
   onTouchMove (e) {
@@ -89,6 +89,9 @@ class Carousel extends React.Component {
       deltaX: deltaX,
       deltaY: deltaY
     })
+
+    this.props.axis === 'x' && (Math.abs(deltaX) > Math.abs(deltaY)) && e.preventDefault()
+    this.props.axis === 'y' && (Math.abs(deltaY) > Math.abs(deltaX)) && e.preventDefault()
 
     // when reach frames edge in non-loop mode, reduce drag effect.
     if (!this.props.loop) {
@@ -110,10 +113,10 @@ class Carousel extends React.Component {
     direction && this.transitFramesTowards(direction)
 
     // cleanup
-    this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove)
-    this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove)
-    this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd, true)
-    this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd, true)
+    this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove, {capture: true})
+    this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove, {capture: true})
+    this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd)
+    this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd)
 
     setTimeout(() => this.prepareAutoSlide(), this.props.duration)
   }
