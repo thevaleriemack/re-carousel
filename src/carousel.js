@@ -25,6 +25,12 @@ class Carousel extends React.Component {
     }
 
     this.mounted = false
+    this.onTouchStart = this.onTouchStart.bind(this)
+    this.onTouchMove = this.onTouchMove.bind(this)
+    this.onTouchEnd = this.onTouchEnd.bind(this)
+    this.autoSlide = this.autoSlide.bind(this)
+    this.prev = this.prev.bind(this)
+    this.next = this.next.bind(this)
 
     if (props.loop === false && props.auto) {
       console.warn('[re-carousel] Auto-slide only works in loop mode.')
@@ -57,7 +63,7 @@ class Carousel extends React.Component {
     this.setState({ frames })
   }
 
-  onTouchStart = (e) => {
+  onTouchStart (e) {
     if (this.state.total < 2) return
     e.preventDefault()
 
@@ -78,7 +84,7 @@ class Carousel extends React.Component {
     this.refs.wrapper.addEventListener('mouseleave', this.onTouchEnd, {capture: true})
   }
 
-  onTouchMove = (e) => {
+  onTouchMove (e) {
     if (e.touches && e.touches.length > 1) return
     this.clearAutoTimeout()
 
@@ -114,7 +120,7 @@ class Carousel extends React.Component {
     this.moveFramesBy(deltaX, deltaY)
   }
 
-  onTouchEnd = () => {
+  onTouchEnd () {
     const direction = this.decideEndPosition()
     direction && this.transitFramesTowards(direction)
 
@@ -190,7 +196,7 @@ class Carousel extends React.Component {
   }
 
   // auto slide to 'next' or 'prev'
-  autoSlide = (rel) => {
+  autoSlide (rel) {
     this.clearAutoTimeout()
 
     switch (rel) {
@@ -206,13 +212,13 @@ class Carousel extends React.Component {
     setTimeout(() => this.prepareAutoSlide(), this.props.duration)
   }
 
-  next = () => {
+  next () {
     const { current, frames } = this.state
     if (!this.props.loop && current === frames.length - 1) return false
     this.autoSlide('next')
   }
 
-  prev = () => {
+  prev () {
     if (!this.props.loop && this.state.current === 0) return false
     this.autoSlide('prev')
   }
