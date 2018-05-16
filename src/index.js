@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import Carousel from './carousel'
 import Dots from './indicator-dots'
 import Buttons from './buttons'
-import './index.css'
 
 // Main App
 class App extends React.Component {
