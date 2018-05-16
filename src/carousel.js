@@ -76,6 +76,7 @@ class Carousel extends React.Component {
     this.refs.wrapper.addEventListener('mousemove', this.onTouchMove, {capture: true})
     this.refs.wrapper.addEventListener('touchend', this.onTouchEnd)
     this.refs.wrapper.addEventListener('mouseup', this.onTouchEnd)
+    this.refs.wrapper.addEventListener('mouseleave', this.onTouchEnd)
   }
 
   onTouchMove (e) {
@@ -117,6 +118,7 @@ class Carousel extends React.Component {
     this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove, {capture: true})
     this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd)
     this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd)
+    this.refs.wrapper.removeEventListener('mouseleave', this.onTouchEnd)
 
     setTimeout(() => this.prepareAutoSlide(), this.props.duration)
   }
