@@ -45,11 +45,17 @@ class Carousel extends React.Component {
     for (let i = 1; i < this.state.frames.length; i++) {
       this.refs['f' + i].style.opacity = 0
     }
+
+    this.refs.wrapper.addEventListener('touchmove', this.onTouchMove, {capture: true})
+    this.refs.wrapper.addEventListener('touchend', this.onTouchEnd, {capture: true})
   }
 
   componentWillUnmount () {
     this.mounted = false
     this.clearAutoTimeout()
+
+    this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove, {capture: true})
+    this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd, {capture: true})
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,6 +65,7 @@ class Carousel extends React.Component {
 
   onTouchStart (e) {
     if (this.state.total < 2) return
+    e.preventDefault()
 
     this.clearAutoTimeout()
     this.updateFrameSize()
@@ -72,11 +79,9 @@ class Carousel extends React.Component {
       deltaY: 0
     })
 
-    this.refs.wrapper.addEventListener('touchmove', this.onTouchMove, {capture: true})
     this.refs.wrapper.addEventListener('mousemove', this.onTouchMove, {capture: true})
-    this.refs.wrapper.addEventListener('touchend', this.onTouchEnd)
-    this.refs.wrapper.addEventListener('mouseup', this.onTouchEnd)
-    this.refs.wrapper.addEventListener('mouseleave', this.onTouchEnd)
+    this.refs.wrapper.addEventListener('mouseup', this.onTouchEnd, {capture: true})
+    this.refs.wrapper.addEventListener('mouseleave', this.onTouchEnd, {capture: true})
   }
 
   onTouchMove (e) {
@@ -91,8 +96,14 @@ class Carousel extends React.Component {
       deltaY: deltaY
     })
 
-    this.props.axis === 'x' && (Math.abs(deltaX) > Math.abs(deltaY)) && e.preventDefault()
-    this.props.axis === 'y' && (Math.abs(deltaY) > Math.abs(deltaX)) && e.preventDefault()
+    if (this.props.axis === 'x' && Math.abs(deltaX) > Math.abs(deltaY)) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    if (this.props.axis === 'y' && Math.abs(deltaY) > Math.abs(deltaX)) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
 
     // when reach frames edge in non-loop mode, reduce drag effect.
     if (!this.props.loop) {
@@ -114,11 +125,9 @@ class Carousel extends React.Component {
     direction && this.transitFramesTowards(direction)
 
     // cleanup
-    this.refs.wrapper.removeEventListener('touchmove', this.onTouchMove, {capture: true})
     this.refs.wrapper.removeEventListener('mousemove', this.onTouchMove, {capture: true})
-    this.refs.wrapper.removeEventListener('touchend', this.onTouchEnd)
-    this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd)
-    this.refs.wrapper.removeEventListener('mouseleave', this.onTouchEnd)
+    this.refs.wrapper.removeEventListener('mouseup', this.onTouchEnd, {capture: true})
+    this.refs.wrapper.removeEventListener('mouseleave', this.onTouchEnd, {capture: true})
 
     setTimeout(() => this.prepareAutoSlide(), this.props.duration)
   }
