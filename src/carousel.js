@@ -65,7 +65,7 @@ class Carousel extends React.Component {
 
   onTouchStart (e) {
     if (this.state.total < 2) return
-    e.preventDefault()
+    // e.preventDefault()
 
     this.clearAutoTimeout()
     this.updateFrameSize()
