@@ -1,5 +1,5 @@
 import buble from 'rollup-plugin-buble'
-import uglify from 'rollup-plugin-uglify'
+import { uglify } from 'rollup-plugin-uglify'
 
 export default {
   input: 'src/carousel.js',
