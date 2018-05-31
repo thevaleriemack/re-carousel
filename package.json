@@ -11,14 +11,14 @@
     "react-dom": "^15 || ^16"
   },
   "devDependencies": {
-    "cross-env": "^5.1.5",
+    "cross-env": "^5.1.6",
     "gh-pages": "^1.0.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-scripts": "^1.1.4",
-    "rollup": "^0.59.0",
+    "rollup": "^0.59.4",
     "rollup-plugin-buble": "^0.19.0",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup-plugin-uglify": "^4.0.0"
   },
   "scripts": {
     "prepack": "npm run build",
