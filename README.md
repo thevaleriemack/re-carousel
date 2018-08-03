@@ -74,7 +74,7 @@ npm run test  # run tests
 
 [MIT][mit] © [Amio][author]
 
-[npm-badge]:https://badgen.now.sh/npm/v/re-carousel
+[npm-badge]:https://badgen.net/npm/v/re-carousel
 [npm-link]: https://www.npmjs.com/package/re-carousel
 [mit]:      http://opensource.org/licenses/MIT
 [author]:   http://github.com/amio
