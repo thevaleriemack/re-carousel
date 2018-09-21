@@ -10,7 +10,7 @@ demo: https://amio.github.io/re-carousel/
 
 then:
 
-```html
+```jsx
 <Carousel auto>
   <div style={{backgroundColor: 'tomato', height: '100%'}}>Frame 1</div>
   <div style={{backgroundColor: 'orange', height: '100%'}}>Frame 2</div>
@@ -22,11 +22,11 @@ then:
 
 All attributes are optional.
 
-- `axis` {enum} `'x'` or `'y'` (`'x'` by default)
-- `loop` {boolean} `true` or `false` (`false` by default) toggle loop mode.
-- `auto` {boolean} `true` or `false` (`false` by default) toggle auto sliding.
-- `interval` {number} (`4000`ms by default) interval for auto sliding.
-- `duration` {number} (`300`ms by default) duration for animation.
+- `axis` {Enum} `'x'` or `'y'` (`'x'` by default)
+- `loop` {Boolean} `true` or `false` (`false` by default) toggle loop mode.
+- `auto` {Boolean} `true` or `false` (`false` by default) toggle auto sliding.
+- `interval` {Number} (`4000`ms by default) interval for auto sliding.
+- `duration` {Number} (`300`ms by default) duration for animation.
 - `widgets` {Array of ReactClass} Indicator and switcher could be various,
   so it's not builtin. Here's some example custom widgets
   ([dots indicator](src/indicator-dots.js),
@@ -61,6 +61,7 @@ All attributes are optional.
     </Carousel>
   }
   ```
+- `className` {String} Custom class name.
 
 ### Contributes
 
