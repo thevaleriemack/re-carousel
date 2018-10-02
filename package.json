@@ -1,7 +1,10 @@
 {
   "name": "re-carousel",
-  "description": "Minimal carousel component for React",
   "version": "2.1.0",
+  "description": "Minimal carousel component for React",
+  "homepage": "https://amio.github.io/re-carousel",
+  "repository": "amio/re-carousel",
+  "license": "MIT",
   "main": "dist/carousel.js",
   "dependencies": {
     "prop-types": "^15.6.2"
@@ -15,8 +18,8 @@
     "gh-pages": "^2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "^1.1.5",
-    "rollup": "^0.66.0",
+    "react-scripts": "^2.0",
+    "rollup": "^0.66.2",
     "rollup-plugin-buble": "^0.19.0",
     "rollup-plugin-uglify": "^6.0.0"
   },
@@ -34,7 +37,10 @@
   "files": [
     "dist/carousel.js"
   ],
-  "homepage": "https://amio.github.io/re-carousel",
-  "repository": "amio/re-carousel",
-  "license": "MIT"
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
