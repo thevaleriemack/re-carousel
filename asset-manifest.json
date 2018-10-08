@@ -1,4 +1,11 @@
 {
-  "main.js": "static/js/main.079628ae.js",
-  "main.js.map": "static/js/main.079628ae.js.map"
+  "main.js": "/re-carousel/static/js/main.9b6abb91.chunk.js",
+  "main.js.map": "/re-carousel/static/js/main.9b6abb91.chunk.js.map",
+  "static/js/1.ad4591f8.chunk.js": "/re-carousel/static/js/1.ad4591f8.chunk.js",
+  "static/js/1.ad4591f8.chunk.js.map": "/re-carousel/static/js/1.ad4591f8.chunk.js.map",
+  "runtime~main.js": "/re-carousel/static/js/runtime~main.d5281133.js",
+  "runtime~main.js.map": "/re-carousel/static/js/runtime~main.d5281133.js.map",
+  "index.html": "/re-carousel/index.html",
+  "precache-manifest.287f6316198cb8e99851350f71ecbfe7.js": "/re-carousel/precache-manifest.287f6316198cb8e99851350f71ecbfe7.js",
+  "service-worker.js": "/re-carousel/service-worker.js"
 }
