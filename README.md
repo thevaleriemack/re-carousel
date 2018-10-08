@@ -1,4 +1,4 @@
-# re-carousel [![npm-version][npm-badge]][npm-link]
+# re-carousel [![npm-version][npm-badge]][npm-link] [![size][size-src]][size-link]
 
 Minimal carousel component for React.
 
@@ -75,7 +75,9 @@ npm run test  # run tests
 
 [MIT][mit] © [Amio][author]
 
-[npm-badge]:https://badgen.net/npm/v/re-carousel
+[npm-badge]: https://badgen.net/npm/v/re-carousel
 [npm-link]: https://www.npmjs.com/package/re-carousel
-[mit]:      http://opensource.org/licenses/MIT
-[author]:   http://github.com/amio
+[size-src]: https://badgen.net/bundlephobia/minzip/re-carousel
+[size-link]: https://bundlephobia.com/result?p=re-carousel
+[mit]: http://opensource.org/licenses/MIT
+[author]: http://github.com/amio
