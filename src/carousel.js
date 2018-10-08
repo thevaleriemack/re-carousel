@@ -5,7 +5,6 @@ const styles = {
   wrapper: {
     width: '100%',
     height: '100%',
-    overflow: 'hidden',
     position: 'relative'
   },
   frame: {
@@ -327,20 +326,24 @@ class Carousel extends React.Component {
   render () {
     const { frames, current } = this.state
     const { widgets, axis, loop, auto, interval } = this.props
+    const wrapperStyle = objectAssign(styles.wrapper, this.props.style)
 
     return (
-      <div
-        ref='wrapper'
-        style={objectAssign(styles.wrapper, this.props.style)}
-        onTouchStart={this.onTouchStart}
-        className={this.props.className}
-        onMouseDown={this.onTouchStart} >
-        {
-          frames.map((frame, i) => {
-            const frameStyle = objectAssign({zIndex: 99 - i}, styles.frame)
-            return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
-          })
-        }
+      <div style={wrapperStyle}>
+        <div
+          ref='wrapper'
+          style={objectAssign({overflow: 'hidden'}, wrapperStyle)}
+          onTouchStart={this.onTouchStart}
+          className={this.props.className}
+          onMouseDown={this.onTouchStart} >
+          {
+            frames.map((frame, i) => {
+              const frameStyle = objectAssign({zIndex: 99 - i}, styles.frame)
+              return <div ref={'f' + i} key={i} style={frameStyle}>{frame}</div>
+            })
+          }
+          { this.props.frames && this.props.children }
+        </div>
         {
           widgets && [].concat(widgets).map((Widget, i) => (
             <Widget
@@ -352,7 +355,6 @@ class Carousel extends React.Component {
               axis={axis} loop={loop} auto={auto} interval={interval} />
           ))
         }
-        { this.props.frames && this.props.children }
       </div>
     )
   }
