@@ -30,7 +30,7 @@ All attributes are optional.
 - `widgets` {Array of ReactClass} Indicator and switcher could be various,
   so it's not builtin. Here's some example custom widgets
   ([dots indicator](src/indicator-dots.js),
-  [prev/next buttons](src/buttons.js)):
+  [prev/next buttons](src/buttons.js), [keyboard navigation](src/keyboard-navigator)):
 
   ```javascript
   import Carousel from 're-carousel'
