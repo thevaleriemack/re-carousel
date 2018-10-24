@@ -247,12 +247,16 @@ class Carousel extends React.Component {
     }, cb)
   }
 
-  prepareSiblingFrames () {
-    const siblings = {
+  getSiblingFrames () {
+    return {
       current: this.refs['f' + this.getFrameId()],
       prev: this.refs['f' + this.getFrameId('prev')],
       next: this.refs['f' + this.getFrameId('next')]
     }
+  }
+
+  prepareSiblingFrames () {
+    const siblings = this.getSiblingFrames()
 
     if (!this.props.loop) {
       this.state.current === 0 && (siblings.prev = undefined)
@@ -289,7 +293,7 @@ class Carousel extends React.Component {
 
   transitFramesTowards (direction) {
     const { prev, current, next } = this.state.movingFrames
-    const { duration, axis } = this.props
+    const { duration, axis, onTransitionEnd } = this.props
 
     let newCurrentId = this.state.current
     switch (direction) {
@@ -323,6 +327,8 @@ class Carousel extends React.Component {
           translateXY(next, 0, this.state.frameHeight, duration)
         }
     }
+
+    onTransitionEnd && setTimeout(() => onTransitionEnd(this.getSiblingFrames()), duration)
 
     this.setState({ current: newCurrentId })
   }
@@ -382,7 +388,8 @@ Carousel.propTypes = {
   widgets: PropTypes.arrayOf(PropTypes.func),
   frames: PropTypes.arrayOf(PropTypes.element),
   style: PropTypes.object,
-  minMove: PropTypes.number
+  minMove: PropTypes.number,
+  onTransitionEnd: PropTypes.func
 }
 
 Carousel.defaultProps = {
