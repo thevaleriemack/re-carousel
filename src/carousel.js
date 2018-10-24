@@ -219,6 +219,19 @@ class Carousel extends React.Component {
 
   prev () {
     if (!this.props.loop && this.state.current === 0) return false
+    const { prev, next } = this.state.movingFrames
+
+    if (prev === next) {
+      // Reprepare start position of prev frame
+      // (it was positioned as "next" frame)
+      if (this.props.axis === 'x') {
+        translateXY(prev, -this.state.frameWidth, 0, 0)
+      } else {
+        translateXY(prev, 0, -this.state.frameHeight, 0)
+      }
+      prev.getClientRects() // trigger layout
+    }
+
     this.autoSlide('prev')
   }
 
