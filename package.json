@@ -16,11 +16,11 @@
   "devDependencies": {
     "cross-env": "^5.2.0",
     "gh-pages": "^2.0.1",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-scripts": "^2.0.4",
-    "rollup": "^0.66.4",
-    "rollup-plugin-buble": "^0.19.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts": "^2.0.5",
+    "rollup": "^0.66.6",
+    "rollup-plugin-buble": "^0.19.4",
     "rollup-plugin-uglify": "^6.0.0"
   },
   "scripts": {
