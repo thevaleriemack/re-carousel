@@ -344,7 +344,7 @@ class Carousel extends React.Component {
 
   render () {
     const { frames, current } = this.state
-    const { widgets, axis, loop, auto, interval } = this.props
+    const { widgets, axis, loop, auto, interval, callback } = this.props
     const wrapperStyle = objectAssign(styles.wrapper, this.props.style)
 
     return (
@@ -371,6 +371,7 @@ class Carousel extends React.Component {
               total={frames.length}
               prevHandler={this.prev}
               nextHandler={this.next}
+              callback={callback}
               axis={axis} loop={loop} auto={auto} interval={interval} />
           ))
         }
@@ -389,7 +390,8 @@ Carousel.propTypes = {
   frames: PropTypes.arrayOf(PropTypes.element),
   style: PropTypes.object,
   minMove: PropTypes.number,
-  onTransitionEnd: PropTypes.func
+  onTransitionEnd: PropTypes.func,
+  callback: PropTypes.func
 }
 
 Carousel.defaultProps = {
