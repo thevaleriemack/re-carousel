@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 
 const styles = {
   wrapper: {
-    width: '100%',
+    width: '90%',
     height: '100%',
-    position: 'relative'
+    position: 'relative',
+    margin: 'auto'
   },
   frame: {
     width: '100%',
@@ -351,7 +352,7 @@ class Carousel extends React.Component {
       <div style={wrapperStyle}>
         <div
           ref='wrapper'
-          style={objectAssign({overflow: 'hidden'}, wrapperStyle)}
+          style={objectAssign({overflow: 'visible'}, wrapperStyle)}
           onTouchStart={this.onTouchStart}
           className={this.props.className}
           onMouseDown={this.onTouchStart} >
