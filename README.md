@@ -46,6 +46,26 @@ All attributes are optional.
     </Carousel>
   }
   ```
+- `callback` {Function} Pass a function to your widget to allow state changes upstream when props update.
+  See an example here
+  ([callback example](src/callback-example.js)):
+
+  ```javascript
+  import Carousel from 're-carousel'
+  import Callback from './callback-example'
+  
+  setCallbackData = data => {
+    this.setState({callbackData: data})
+  }
+
+  export default function carousel () {
+    return <Carousel loop auto widgets={[Callback]} callback={this.setCallbackData}>
+      <div style={{backgroundColor: 'tomato', height: '100%'}}>Frame 1</div>
+      <div style={{backgroundColor: 'orange', height: '100%'}}>Frame 2</div>
+      <div style={{backgroundColor: 'orchid', height: '100%'}}>Frame 3</div>
+    </Carousel>
+  }
+  ```
 - `frames` {Array of ReactElement} If you want to create frames programmatically,
   use this attribute:
 
